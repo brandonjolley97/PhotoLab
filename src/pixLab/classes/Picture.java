@@ -148,6 +148,42 @@ public class Picture extends SimplePicture
     } 
   }
   
+  public void mirrorVerticalRightToLeft()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel leftPixel = null;
+	  Pixel rightPixel = null;
+	  int pictureWidth = pixels[0].length;
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = pixels[0].length - 1; col > pictureWidth / 2; col--)
+		  {
+			  rightPixel = pixels[row][col];
+			  leftPixel = pixels[row][(pictureWidth/2) - (col-pictureWidth/2)];
+			  leftPixel.setColor(rightPixel.getColor());
+		  }
+	  }
+  }
+  
+  public void randomColor()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(Pixel[] row : pixels)
+	  {
+		  for(Pixel currentPixel : row)
+		  {
+			  int randomRed, randomBlue, randomGreen;
+			  randomRed = (int)(Math.random() * 256);
+			  randomBlue = (int)(Math.random() * 256);
+			  randomGreen = (int)(Math.random() * 256);
+			  
+			  currentPixel.setBlue(randomBlue);
+			  currentPixel.setRed(randomRed);
+			  currentPixel.setGreen(randomGreen);
+		  }
+	  }
+  }
+  
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
@@ -253,14 +289,20 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("blueMotorcycle.jpg");
-    beach.explore();
-    beach.zeroGreen();
-    beach.explore();
-    beach.zeroBlue();
-    beach.explore();
-    beach.zeroRed();
-    beach.explore();
+    Picture flora = new Picture("flower2.jpg");
+    Picture flower = new Picture("flower1.jpg");
+    flora.explore();
+    flower.explore();
+    flora.zeroGreen();
+    flower.zeroBlue();
+    flora.explore();
+    flower.explore();
+    flower.mirrorVertical();
+    flower.explore();
+    flower.randomColor();
+    flower.explore();
+    
+    
     
   }
   
