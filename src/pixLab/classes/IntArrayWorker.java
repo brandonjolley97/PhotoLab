@@ -138,12 +138,12 @@ public class IntArrayWorker
 	  return biggestInt;
   }
   
-  public int getColTotal()
+  public int getColTotal(int col)
   {
 	  int total = 0;
 	  for (int row = 0; row < matrix.length; row++)
 	  {
-		  
+		 total = matrix[row][col] + total;
 	  }
 	  return total;
   }
