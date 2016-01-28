@@ -128,6 +128,25 @@ public class Picture extends SimplePicture
 	  }
   }
   
+  public void keepOnlyBlue()
+  {
+	  zeroRed();
+	  zeroGreen();
+	  
+  }
+  
+  public void keepOnlyRed()
+  {
+	  zeroBlue();
+	  zeroGreen();
+  }
+  
+  public void keepOnlyGreen()
+  {
+	  zeroRed();
+	  zeroBlue();
+  }
+  
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -175,11 +194,33 @@ public class Picture extends SimplePicture
 	  {
 		  for(int row = 0; row <= pictureHeight / 2; row++)
 		  {
-			  topPixel = pixels[col][row];
-			  bottomPixel = pixels[col][(pictureHeight/2) + ((pictureHeight/2) - row)];
+			  topPixel = pixels[row][col];
+			  bottomPixel = pixels[((pictureHeight/2) + ((pictureHeight/2) - row) - 1)][col];
 			  bottomPixel.setColor(topPixel.getColor());
 		  }
 	  }
+  }
+  
+  public void mirrorHorizontalBottomToTop()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel topPixel = null;
+	  Pixel bottomPixel = null;
+	  int pictureHeight = pixels.length;
+	  for(int col = 0; col < pixels[0].length; col++)
+	  {
+		  for(int row = pictureHeight - 1; row >= pictureHeight / 2; row--)
+		  {
+			  topPixel = pixels[((pictureHeight/2) - (row-(pictureHeight/2)) + 1)][col];
+			  bottomPixel = pixels[row][col];
+			  topPixel.setColor(bottomPixel.getColor());
+		  }
+	  }
+  }
+  
+  public void mirrorArms()
+  {
+	  mirrorHorizontalBottomToTop();
   }
   
   public void randomColor()
@@ -306,10 +347,33 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture flora = new Picture("flower2.jpg");
+    Picture snowman = new Picture("snowman.jpg");
+    Picture temple = new Picture("temple.jpg");
     Picture flower = new Picture("flower1.jpg");
-    flower.mirrorHorizontal();
-    flower.explore();
+    Picture flower1 = new Picture("flower1.jpg");
+    Picture flower2 = new Picture("flower1.jpg");
+    Picture flower3 = new Picture("flower1.jpg");
+    Picture flower4 = new Picture("flower1.jpg");
+    Picture flower5 = new Picture("flower1.jpg");
+    Picture flower6 = new Picture("flower1.jpg");
+    flower1.keepOnlyBlue();
+    flower1.explore();
+    flower2.keepOnlyGreen();
+    flower2.explore();
+    flower3.keepOnlyRed();
+    flower3.explore();
+    flower4.mirrorVerticalRightToLeft();
+    flower4.explore();
+    flower5.mirrorHorizontal();
+    flower5.explore();
+    flower6.mirrorHorizontalBottomToTop();
+    flower6.explore();
+    temple.mirrorTemple();
+    temple.explore();
+    snowman.mirrorArms();
+    snowman.explore();
+    
+    
     
    
     
