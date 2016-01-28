@@ -165,6 +165,23 @@ public class Picture extends SimplePicture
 	  }
   }
   
+  public void mirrorHorizontal()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel topPixel = null;
+	  Pixel bottomPixel = null;
+	  int pictureHeight = pixels.length;
+	  for(int col = 0; col < pixels[0].length; col++)
+	  {
+		  for(int row = 0; row <= pictureHeight / 2; row++)
+		  {
+			  topPixel = pixels[col][row];
+			  bottomPixel = pixels[col][(pictureHeight/2) + ((pictureHeight/2) - row)];
+			  bottomPixel.setColor(topPixel.getColor());
+		  }
+	  }
+  }
+  
   public void randomColor()
   {
 	  Pixel[][] pixels = this.getPixels2D();
@@ -291,17 +308,10 @@ public class Picture extends SimplePicture
   {
     Picture flora = new Picture("flower2.jpg");
     Picture flower = new Picture("flower1.jpg");
-    flora.explore();
-    flower.explore();
-    flora.zeroGreen();
-    flower.zeroBlue();
-    flora.explore();
-    flower.explore();
-    flower.mirrorVertical();
-    flower.explore();
-    flower.randomColor();
+    flower.mirrorHorizontal();
     flower.explore();
     
+   
     
     
   }
