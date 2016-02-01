@@ -94,7 +94,9 @@ public class Picture extends SimplePicture
     {
       for (Pixel pixelObj : rowArray)
       {
+    	int tempBlue = pixelObj.getBlue();
         pixelObj.setBlue(0);
+        tempBlue = pixelObj.getBlue();
       }
     }
   }
@@ -124,6 +126,55 @@ public class Picture extends SimplePicture
 			  //or
 			  
 			  original[row][col].setRed(0);
+		  }
+	  }
+  }
+  
+  public void grayscale()
+  {
+	  Pixel[][] original = this.getPixels2D();
+	  for(int row = 0; row < original.length; row++)
+	  {
+		  for (int col = 0; col < original[0].length; col++)
+		  {
+			  Pixel currentPixel = original[row][col];
+			  
+			  int currentRed = currentPixel.getRed();
+			  int currentBlue = currentPixel.getBlue();
+			  int currentGreen = currentPixel.getGreen();
+			  
+			  int currentAverage = (currentRed + currentGreen + currentBlue) / 3;
+			  
+			  currentPixel.setRed(currentAverage);
+			  currentPixel.setBlue(currentAverage);
+			  currentPixel.setGreen(currentAverage);
+			  
+		  }
+			  
+	  }
+  }
+  
+  public void negate()
+  {
+	  Pixel[][] original = this.getPixels2D();
+	  for(int row = 0; row < original.length; row++)
+	  {
+		  for (int col = 0; col < original[0].length; col++)
+		  {
+			  Pixel currentPixel = original[row][col];
+			  
+			  int currentRed = currentPixel.getRed();
+			  int currentBlue = currentPixel.getBlue();
+			  int currentGreen = currentPixel.getGreen();
+			  
+			  int negateRed = 256 - currentRed;
+			  int negateGreen = 256 - currentGreen;
+			  int negateBlue = 256 - currentBlue;
+			  
+			  currentPixel.setRed(negateRed);
+			  currentPixel.setBlue(negateBlue);
+			  currentPixel.setGreen(negateGreen);
+	
 		  }
 	  }
   }
@@ -214,6 +265,25 @@ public class Picture extends SimplePicture
 			  topPixel = pixels[((pictureHeight/2) - (row-(pictureHeight/2)) + 1)][col];
 			  bottomPixel = pixels[row][col];
 			  topPixel.setColor(bottomPixel.getColor());
+		  }
+	  }
+  }
+  
+  public void mirrorDiagonal()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel topLeftPixel = null;
+	  Pixel bottomRightPixel = null;
+	  int pictureHeight = pixels.length;
+	  int pictureWidth = pixels[0].length;
+	  for(int col = 0; col < pictureWidth; col++)
+	  {
+		  for(int row = 0; row < pictureHeight; row++)
+		  {
+			  pictureWidth--;
+			  bottomRightPixel = [][];
+			  topLeftPixel = pixels[row][col];
+			  bottomRightPixel.setColor(topLeftPixel.getColor());
 		  }
 	  }
   }
@@ -356,22 +426,25 @@ public class Picture extends SimplePicture
     Picture flower4 = new Picture("flower1.jpg");
     Picture flower5 = new Picture("flower1.jpg");
     Picture flower6 = new Picture("flower1.jpg");
-    flower1.keepOnlyBlue();
-    flower1.explore();
-    flower2.keepOnlyGreen();
-    flower2.explore();
-    flower3.keepOnlyRed();
-    flower3.explore();
-    flower4.mirrorVerticalRightToLeft();
-    flower4.explore();
-    flower5.mirrorHorizontal();
-    flower5.explore();
-    flower6.mirrorHorizontalBottomToTop();
-    flower6.explore();
-    temple.mirrorTemple();
+    temple.mirrorDiagonal();
+    //flower.mirrorVertical();
     temple.explore();
-    snowman.mirrorArms();
-    snowman.explore();
+    //flower1.keepOnlyBlue();
+    //flower1.explore();
+    //flower2.keepOnlyGreen();
+    //flower2.explore();
+    //flower3.keepOnlyRed();
+    //flower3.explore();
+    //flower4.mirrorVerticalRightToLeft();
+    //flower4.explore();
+    //flower5.mirrorHorizontal();
+    //flower5.explore();
+    //flower6.mirrorHorizontalBottomToTop();
+    //flower6.explore();
+    //temple.mirrorTemple();
+    //temple.explore();
+    //snowman.mirrorArms();
+    //snowman.explore();
     
     
     
