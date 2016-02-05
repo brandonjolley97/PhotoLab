@@ -272,25 +272,82 @@ public class Picture extends SimplePicture
   public void mirrorDiagonal()
   {
 	  Pixel[][] pixels = this.getPixels2D();
-	  Pixel topLeftPixel = null;
-	  Pixel bottomRightPixel = null;
+	  Pixel topRightPixel = null;
+	  Pixel bottomLeftPixel = null;
 	  int pictureHeight = pixels.length;
 	  int pictureWidth = pixels[0].length;
-	  for(int col = 0; col < pictureWidth; col++)
+	  for(int row = 0; row < pictureHeight; row++)
 	  {
-		  for(int row = 0; row < pictureHeight; row++)
+		  for(int col = pictureWidth - 1; col >= 0; col--)
 		  {
-			  pictureWidth--;
-			  bottomRightPixel = [][];
-			  topLeftPixel = pixels[row][col];
-			  bottomRightPixel.setColor(topLeftPixel.getColor());
+			  
+		  }
+		  pictureWidth--;
+	  }
+	  
+  }
+  
+  public void edgeDetection2(int edgeDist)
+  {
+	  Pixel topPixel = null;
+	  Pixel bottomPixel = null;
+	  Pixel rightPixel = null;
+	  Pixel[][] pixels = this.getPixels2D();
+	  Color bottomColor = null;
+	  Color rightColor = null;
+	  for (int col = 0; col < pixels[0].length -1; col++)
+	  {
+		  for(int row = 0; row < pixels.length -1; row++)
+		  {
+			  topPixel = pixels[row][col];
+			  rightPixel = pixels[row][col + 1];
+			  bottomPixel = pixels[row +1][col];
+			  bottomColor = bottomPixel.getColor();
+			  rightColor = rightPixel.getColor();
+			  if(topPixel.colorDistance(bottomColor) > edgeDist && topPixel.colorDistance(rightColor) > edgeDist)
+			  {
+				  topPixel.setColor(Color.BLACK);
+			  }
+			  else
+			  {
+				  topPixel.setColor(Color.WHITE);
+			  }
 		  }
 	  }
+  }
+  
+  public void copy()
+  {
+	  
   }
   
   public void mirrorArms()
   {
 	  mirrorHorizontalBottomToTop();
+  }
+  
+  public void fixUnderwater()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = 0; col < pixels[0].length; col++)
+		  {
+			  Pixel currentPixel = pixels[row][col];
+			  
+			  int currentRed = currentPixel.getRed();
+			  int currentBlue = currentPixel.getBlue();
+			  int currentGreen = currentPixel.getGreen();
+			  
+			  int newBlue = currentBlue -75;
+			  int newRed = currentRed + 75;
+			  int newGreen = currentGreen - 75;
+			  
+			  currentPixel.setRed(newRed);
+			  currentPixel.setBlue(newBlue);
+			  currentPixel.setGreen(newGreen);
+		  }
+	  }
   }
   
   public void randomColor()
@@ -308,6 +365,25 @@ public class Picture extends SimplePicture
 			  currentPixel.setBlue(randomBlue);
 			  currentPixel.setRed(randomRed);
 			  currentPixel.setGreen(randomGreen);
+		  }
+	  }
+  }
+  
+  public void mirrorGull()
+  {
+	  int startPoint = 238;
+	  int copyPoint = 343;
+	  Pixel leftPixel = null;
+	  Pixel rightPixel = null;
+	  int count = 0;
+	  Pixel[][] pixels = this.getPixels2D();
+	  for(int row = 234; row < 322; row++)
+	  {
+		  for(int col = startPoint; col < copyPoint; col++)
+		  {
+			  leftPixel = pixels[row][col];
+			  rightPixel = pixels[row][col + startPoint/2];
+			  rightPixel.setColor(leftPixel.getColor());
 		  }
 	  }
   }
@@ -417,18 +493,22 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture snowman = new Picture("snowman.jpg");
-    Picture temple = new Picture("temple.jpg");
-    Picture flower = new Picture("flower1.jpg");
-    Picture flower1 = new Picture("flower1.jpg");
-    Picture flower2 = new Picture("flower1.jpg");
-    Picture flower3 = new Picture("flower1.jpg");
-    Picture flower4 = new Picture("flower1.jpg");
-    Picture flower5 = new Picture("flower1.jpg");
-    Picture flower6 = new Picture("flower1.jpg");
-    temple.mirrorDiagonal();
+//    Picture snowman = new Picture("snowman.jpg");
+//    Picture gull = new Picture("seagull.jpg");
+    Picture underwater = new Picture("swan.jpg");
+//    Picture temple = new Picture("temple.jpg");
+//    Picture flower = new Picture("flower1.jpg");
+//    Picture flower1 = new Picture("flower1.jpg");
+//    Picture flower2 = new Picture("flower1.jpg");
+//    Picture flower3 = new Picture("flower1.jpg");
+//    Picture flower4 = new Picture("flower1.jpg");
+//    Picture flower5 = new Picture("flower1.jpg");
+//    Picture flower6 = new Picture("flower1.jpg");
+    //temple.mirrorDiagonal();
     //flower.mirrorVertical();
-    temple.explore();
+    underwater.explore();
+    underwater.edgeDetection2(10);
+    underwater.explore();
     //flower1.keepOnlyBlue();
     //flower1.explore();
     //flower2.keepOnlyGreen();
