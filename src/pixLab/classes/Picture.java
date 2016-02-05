@@ -290,9 +290,12 @@ public class Picture extends SimplePicture
   public void edgeDetection2(int edgeDist)
   {
 	  Pixel topPixel = null;
+	  Pixel leftPixel = null;
 	  Pixel bottomPixel = null;
 	  Pixel rightPixel = null;
 	  Pixel[][] pixels = this.getPixels2D();
+	  Color leftColor = null;
+	  Color topColor = null;
 	  Color bottomColor = null;
 	  Color rightColor = null;
 	  for (int col = 0; col < pixels[0].length -1; col++)
